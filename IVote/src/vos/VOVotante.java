@@ -25,6 +25,10 @@ public class VOVotante {
 		this.password = password;
 	}
 	
+	public VOVotante() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -3,7 +3,9 @@ package rest;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import tm.IVoteTM;
 import vos.VOCandidato;
+import vos.VOVotante;
 
 @Path("usuario")
 public class VotanteServices {
@@ -40,14 +43,37 @@ public class VotanteServices {
 	 */
 	@GET
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getCandidatos() {
+	public Response getVotantes() {
 		IVoteTM tm = new IVoteTM(getPath());
-		List<VOCandidato> candidatos;
+		List<VOVotante> votantes;
 		try {
-			candidatos = tm.darContratos();
+			votantes = tm.darVotantes();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(candidatos).build();
+		return Response.status(200).entity(votantes).build();
+	}
+	
+	/**
+	 * Método que expone servicio REST usando POST que registra un usuario en la base de datos con una contraseña autogenerada
+	 * <b>URL: </b> 
+	 * @param
+	 * @return
+	 */
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response registrarUsuario(VOVotante votante) {
+		IVoteTM tm = new IVoteTM(getPath());
+		VOVotante votantenuevo = new VOVotante();
+		try
+		{
+			votantenuevo = votante;
+			tm.registrarVotante(votantenuevo);
+		}
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(votantenuevo).build();
 	}
 }

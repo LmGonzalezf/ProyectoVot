@@ -161,5 +161,39 @@ public class IVoteTM {
 		return votantes;
 	}
 
+	public void registrarVotante(VOVotante votantenuevo) throws Exception {
+		DAOVotante daovotante = new DAOVotante();
+		try 
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daovotante.setConn(conn);
+			daovotante.registrarUsuario(votantenuevo);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daovotante.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
 }
 
