@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.DAOCandidato;
+import dao.DAOGanadores;
 import dao.DAOVotante;
 import vos.VOCandidato;
+import vos.VOGanadores;
 import vos.VOVotante;
 
 public class IVoteTM {
@@ -193,6 +195,41 @@ public class IVoteTM {
 			}
 		}
 		
+	}
+	
+	public List<VOGanadores> darGanadores() throws Exception 
+	{
+		List<VOGanadores> ganadores;
+		DAOGanadores daoganadores = new DAOGanadores();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daoganadores.setConn(conn);
+			ganadores = daoganadores.consultarGanadores();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoganadores.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return ganadores;
 	}
 
 }

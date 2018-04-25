@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import vos.VOGanadores;
 import vos.VOVotante;
 
 
@@ -49,5 +50,29 @@ public class DAOGanadores {
 	 */
 	public void setConn(Connection con){
 		this.conn = con;
+	}
+	
+	/**
+	 * Método que permite la consulta de los ganadores historicos de todas las elecciones
+	 * @throws Exception 
+	 */
+	public ArrayList<VOGanadores> consultarGanadores() throws Exception
+	{
+		ArrayList<VOGanadores> ganadores = new ArrayList<VOGanadores>();
+
+		String sql = "SELECT * FROM sistema.ganadores";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			Long id = rs.getLong(1);
+			Long idCandidato = rs.getLong(2);
+			Long idEleccion = rs.getLong(3);
+			Long votos = rs.getLong(4);
+			ganadores.add(new VOGanadores(id, idCandidato, idEleccion, votos));
+		}
+		return ganadores;
 	}
 }

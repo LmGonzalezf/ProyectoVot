@@ -9,7 +9,7 @@ public class VOGanadores {
 	@JsonProperty(value="id")
 	Long id;
 	@JsonProperty(value="idCandidato")
-	String idCandidato;
+	Long idCandidato;
 	@JsonProperty(value="idEleccion")
 	Long idEleccion;
 	@JsonProperty(value="votos")
@@ -21,7 +21,7 @@ public class VOGanadores {
 	}
 
 	
-	public VOGanadores(@JsonProperty(value="id")Long id,@JsonProperty(value="idCandidato") String idCandidato,@JsonProperty(value="idEleccion") Long idEleccion,@JsonProperty(value="votos") Long votos) {
+	public VOGanadores(@JsonProperty(value="id")Long id,@JsonProperty(value="idCandidato") Long idCandidato,@JsonProperty(value="idEleccion") Long idEleccion,@JsonProperty(value="votos") Long votos) {
 		super();
 		this.id = id;
 		this.idCandidato = idCandidato;
@@ -40,12 +40,12 @@ public class VOGanadores {
 	}
 
 
-	public String getIdCandidato() {
+	public Long getIdCandidato() {
 		return idCandidato;
 	}
 
 
-	public void setIdCandidato(String idCandidato) {
+	public void setIdCandidato(Long idCandidato) {
 		this.idCandidato = idCandidato;
 	}
 
