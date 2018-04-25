@@ -13,7 +13,7 @@ public class VOVotaciones {
 	@JsonProperty(value="horaFinal")
 	Date horaFinal;
 	
-	public VOVotaciones(Long idVotacion, Date horaInicio, Date horaFinal) {
+	public VOVotaciones(@JsonProperty(value="id") Long idVotacion,@JsonProperty(value="horaInicio") Date horaInicio,@JsonProperty(value="horaFinal") Date horaFinal) {
 		super();
 		this.idVotacion = idVotacion;
 		this.horaInicio = horaInicio;
