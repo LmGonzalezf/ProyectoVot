@@ -11,6 +11,7 @@ import java.util.Properties;
 import dao.DAOCandidato;
 import dao.DAOEleccion;
 import dao.DAOGanadores;
+import dao.DAOListaVotacion;
 import dao.DAOVotacion;
 import dao.DAOVotante;
 import dao.DAOVoto;
@@ -18,6 +19,7 @@ import vos.VOCandidato;
 import vos.VOConsultaVotos;
 import vos.VOEleccion;
 import vos.VOGanadores;
+import vos.VOListaVotacion;
 import vos.VOVotaciones;
 import vos.VOVotante;
 
@@ -375,6 +377,41 @@ public class IVoteTM {
 			}
 		}
 		return elecciones;
+	}
+	
+	public List<VOListaVotacion> darListasVotaciones() throws Exception
+	{
+		List<VOListaVotacion> listas;
+		DAOListaVotacion daolista = new DAOListaVotacion();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daolista.setConn(conn);
+			listas = daolista.darListasVotacion();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daolista.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return listas;
 	}
 }
 

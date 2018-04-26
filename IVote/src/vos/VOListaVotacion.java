@@ -10,13 +10,13 @@ public class VOListaVotacion {
 	Long idLista;
 	@JsonProperty(value="nombre")
 	String nombre;
-	@JsonProperty(value="idEleccion")
-	Long idEleccion;
-	public VOListaVotacion(@JsonProperty(value="id")Long idLista,@JsonProperty(value="nombre") String nombre,@JsonProperty(value="idEleccion") Long idEleccion) {
+	@JsonProperty(value="idVotacion")
+	Long idVotacion;
+	public VOListaVotacion(@JsonProperty(value="id")Long idLista,@JsonProperty(value="nombre") String nombre,@JsonProperty(value="idVotacion") Long idVotacion) {
 		super();
 		this.idLista = idLista;
 		this.nombre = nombre;
-		this.idEleccion = idEleccion;
+		this.idVotacion = idVotacion;
 	}
 	public Long getIdLista() {
 		return idLista;
@@ -31,10 +31,10 @@ public class VOListaVotacion {
 		this.nombre = nombre;
 	}
 	public Long getIdEleccion() {
-		return idEleccion;
+		return idVotacion;
 	}
 	public void setIdEleccion(Long idEleccion) {
-		this.idEleccion = idEleccion;
+		this.idVotacion = idEleccion;
 	}
 
 }
