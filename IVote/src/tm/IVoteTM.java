@@ -10,7 +10,9 @@ import java.util.Properties;
 
 import dao.DAOCandidato;
 import dao.DAOVotante;
+import dao.DAOVoto;
 import vos.VOCandidato;
+import vos.VOConsultaVotos;
 import vos.VOVotante;
 
 public class IVoteTM {
@@ -159,6 +161,74 @@ public class IVoteTM {
 			}
 		}
 		return votantes;
+	}
+	
+	public List<VOConsultaVotos> darVotosPorTipo() throws Exception{
+		List<VOConsultaVotos> votos;
+		DAOVoto daoVoto = new DAOVoto();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daoVoto.setConn(conn);
+			votos = daoVoto.darVotos();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVoto.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votos;
+	}
+	
+	public boolean validarCredenciales(VOVotante credenciales) throws Exception{
+		boolean retorno;
+		DAOVotante votante = new DAOVotante();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			votante.setConn(conn);
+			retorno = votante.hacerComprobacion(credenciales);
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				votante.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return retorno;
 	}
 
 }

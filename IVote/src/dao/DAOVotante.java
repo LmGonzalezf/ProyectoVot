@@ -69,4 +69,24 @@ public class DAOVotante {
 		}
 		return candidatos;
 	}
+	
+	public boolean hacerComprobacion(VOVotante credenciales) throws SQLException, Exception{
+		boolean retorno = false;
+		String sql = "SELECT \"USUARIO\", \"CONTRASEÑA\" FROM sistema.votantes WHERE \"USUARIO\" = ?";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt.setString(1, credenciales.getUsuario());
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		String pass = "";
+		while(rs.next()) {
+			pass = rs.getString("CONTRASEÑA");
+		}
+		if(pass.equals(credenciales.getPassword())){
+			retorno = true;
+		}
+		else if(!pass.equals(credenciales.getPassword())){
+			retorno = false;
+		}
+		return retorno;
+	}
 }

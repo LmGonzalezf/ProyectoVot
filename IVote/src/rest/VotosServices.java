@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -13,10 +12,10 @@ import javax.ws.rs.core.Response;
 
 import tm.IVoteTM;
 import vos.VOCandidato;
-import vos.VOVotante;
+import vos.VOConsultaVotos;
 
-@Path("usuario")
-public class VotanteServices {
+@Path("votos")
+public class VotosServices {
 	@Context
 	private ServletContext context;
 
@@ -42,28 +41,14 @@ public class VotanteServices {
 	 */
 	@GET
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getCandidatos() {
+	public Response getVotos() {
 		IVoteTM tm = new IVoteTM(getPath());
-		List<VOCandidato> candidatos;
+		List<VOConsultaVotos> votos;
 		try {
-			candidatos = tm.darContratos();
+			votos = tm.darVotosPorTipo();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(candidatos).build();
-	}
-	
-	@POST
-	@Path("/credenciales")
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response validarUsuario(VOVotante credenciales) {
-		IVoteTM tm = new IVoteTM(getPath());
-		boolean retorno = false;
-		try {
-			retorno = tm.validarCredenciales(credenciales);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(retorno).build();
+		return Response.status(200).entity(votos).build();
 	}
 }

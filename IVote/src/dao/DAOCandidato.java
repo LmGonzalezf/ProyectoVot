@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import vos.VOCandidato;
 
@@ -71,5 +72,6 @@ public class DAOCandidato {
 		}
 		return candidatos;
 	}
+	
 	
 }
