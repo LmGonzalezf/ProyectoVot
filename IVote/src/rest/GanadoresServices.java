@@ -14,10 +14,11 @@ import javax.ws.rs.core.Response;
 
 import tm.IVoteTM;
 import vos.VOCandidato;
+import vos.VOGanadores;
 import vos.VOVotante;
 
-@Path("usuario")
-public class VotanteServices {
+@Path("ganadores")
+public class GanadoresServices {
 	@Context
 	private ServletContext context;
 
@@ -43,51 +44,15 @@ public class VotanteServices {
 	 */
 	@GET
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getVotantes() {
+	public Response getGanadores() {
 		IVoteTM tm = new IVoteTM(getPath());
-		List<VOVotante> votantes;
+		List<VOGanadores> ganadores;
 		try {
-			votantes = tm.darVotantes();
+			ganadores = tm.darGanadores();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(votantes).build();
+		return Response.status(200).entity(ganadores).build();
 	}
 	
-	/**
-	 * Método que expone servicio REST usando POST que registra un usuario en la base de datos con una contraseña autogenerada
-	 * <b>URL: </b> 
-	 * @param
-	 * @return
-	 */
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response registrarUsuario(VOVotante votante) {
-		IVoteTM tm = new IVoteTM(getPath());
-		VOVotante votantenuevo = new VOVotante();
-		try
-		{
-			votantenuevo = votante;
-			tm.registrarVotante(votantenuevo);
-		}
-		catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(votantenuevo).build();
-	}
-	
-	@POST
-	@Path("/credenciales")
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response validarUsuario(VOVotante credenciales) {
-		IVoteTM tm = new IVoteTM(getPath());
-		boolean retorno = false;
-		try {
-			retorno = tm.validarCredenciales(credenciales);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(retorno).build();
-	}
 }

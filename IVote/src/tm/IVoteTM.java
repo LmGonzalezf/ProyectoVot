@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.DAOCandidato;
+import dao.DAOGanadores;
 import dao.DAOVotante;
 import dao.DAOVoto;
 import vos.VOCandidato;
 import vos.VOConsultaVotos;
+import vos.VOGanadores;
 import vos.VOVotante;
 
 public class IVoteTM {
@@ -229,6 +231,75 @@ public class IVoteTM {
 			}
 		}
 		return retorno;
+	}
+
+	public void registrarVotante(VOVotante votantenuevo) throws Exception {
+		DAOVotante daovotante = new DAOVotante();
+		try 
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daovotante.setConn(conn);
+			daovotante.registrarUsuario(votantenuevo);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daovotante.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+	
+	public List<VOGanadores> darGanadores() throws Exception 
+	{
+		List<VOGanadores> ganadores;
+		DAOGanadores daoganadores = new DAOGanadores();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daoganadores.setConn(conn);
+			ganadores = daoganadores.consultarGanadores();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoganadores.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return ganadores;
 	}
 
 }
