@@ -14,18 +14,16 @@ public class VOEleccion {
 	Date fechaFinal;
 	@JsonProperty(value="fechaInicio")
 	Date fechaInicio;
-	@JsonProperty(value="idVotacion")
-	String idVotacion;
 	
 	
 	
-	public VOEleccion(@JsonProperty(value="id")Long idEleccion,@JsonProperty(value="nombre") String nombre,@JsonProperty(value="fechaFinal") Date fechaFinal,@JsonProperty(value="fechaInicio") Date fechaInicio,@JsonProperty(value="idVotacion") String idVotacion) {
+	public VOEleccion(@JsonProperty(value="id")Long idEleccion,@JsonProperty(value="nombre") String nombre,@JsonProperty(value="fechaFinal") Date fechaFinal,@JsonProperty(value="fechaInicio") Date fechaInicio) {
 		super();
 		this.idEleccion = idEleccion;
 		this.nombre = nombre;
 		this.fechaFinal = fechaFinal;
 		this.fechaInicio = fechaInicio;
-		this.idVotacion = idVotacion;
+		
 	}
 	public Long getIdEleccion() {
 		return idEleccion;
@@ -50,11 +48,5 @@ public class VOEleccion {
 	}
 	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
-	}
-	public String getIdVotacion() {
-		return idVotacion;
-	}
-	public void setIdVotacion(String idVotacion) {
-		this.idVotacion = idVotacion;
 	}
 }

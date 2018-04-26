@@ -9,12 +9,16 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.DAOCandidato;
+import dao.DAOEleccion;
 import dao.DAOGanadores;
+import dao.DAOVotacion;
 import dao.DAOVotante;
 import dao.DAOVoto;
 import vos.VOCandidato;
 import vos.VOConsultaVotos;
+import vos.VOEleccion;
 import vos.VOGanadores;
+import vos.VOVotaciones;
 import vos.VOVotante;
 
 public class IVoteTM {
@@ -97,7 +101,7 @@ public class IVoteTM {
 		return DriverManager.getConnection(url, user, password);
 	}
 	
-	public List<VOCandidato> darContratos() throws Exception {
+	public List<VOCandidato> darCandidatos() throws Exception {
 		List<VOCandidato> candidatos;
 		DAOCandidato daoCandidato = new DAOCandidato();
 		try 
@@ -301,6 +305,76 @@ public class IVoteTM {
 		}
 		return ganadores;
 	}
-
+	
+	
+	public List<VOVotaciones> darVotaciones() throws Exception
+	{
+		List<VOVotaciones> votaciones;
+		DAOVotacion daovotacion = new DAOVotacion();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daovotacion.setConn(conn);
+			votaciones = daovotacion.darVotaciones();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daovotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votaciones;
+	}
+	
+	public List<VOEleccion> darEleccioness() throws Exception
+	{
+		List<VOEleccion> elecciones;
+		DAOEleccion daoeleccion = new DAOEleccion();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			
+			daoeleccion.setConn(conn);
+			elecciones = daoeleccion.darElecciones();
+			
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoeleccion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return elecciones;
+	}
 }
 

@@ -12,12 +12,18 @@ public class VOVotaciones {
 	Date horaInicio;
 	@JsonProperty(value="horaFinal")
 	Date horaFinal;
+	@JsonProperty(value="idEleccion")
+	Long idEleccion;
+	@JsonProperty(value="nombre")
+	String nombre;
 	
-	public VOVotaciones(@JsonProperty(value="id") Long idVotacion,@JsonProperty(value="horaInicio") Date horaInicio,@JsonProperty(value="horaFinal") Date horaFinal) {
+	public VOVotaciones(@JsonProperty(value="nombre")String nombre,@JsonProperty(value="idEleccion")Long idEleccion,@JsonProperty(value="id") Long idVotacion,@JsonProperty(value="horaInicio") Date horaInicio,@JsonProperty(value="horaFinal") Date horaFinal) {
 		super();
 		this.idVotacion = idVotacion;
 		this.horaInicio = horaInicio;
 		this.horaFinal = horaFinal;
+		this.idEleccion = idEleccion;
+		this.nombre = nombre;
 	}
 	public Long getIdVotacion() {
 		return idVotacion;
@@ -37,4 +43,17 @@ public class VOVotaciones {
 	public void setHoraFinal(Date horaFinal) {
 		this.horaFinal = horaFinal;
 	}
+	public Long getIdEleccion() {
+		return idEleccion;
+	}
+	public void setIdEleccion(Long idEleccion) {
+		this.idEleccion = idEleccion;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 }
