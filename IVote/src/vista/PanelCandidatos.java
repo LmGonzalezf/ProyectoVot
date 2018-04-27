@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,7 +39,10 @@ public class PanelCandidatos extends JPanel implements ActionListener
 	    /**
 	     * Botón para candidato.
 	     */
+	    
 	    private JCheckBox[] checks;
+	    
+	    private ButtonGroup grupo= new ButtonGroup() ;
 
 	    // -----------------------------------------------------------
 	    // Constructores
@@ -52,27 +56,67 @@ public class PanelCandidatos extends JPanel implements ActionListener
 	     */
 	    public PanelCandidatos( VotoFrame pPrincipal )
 	    {
+
 	        principal = pPrincipal;
 	        setLayout( new GridLayout( 2, 3 ) );
-
+	        
+	        	
 	        checks = new JCheckBox[6];
 	        for( int i = 0; i < checks.length; i++ )
 	        {
 	        	JPanel lugar  = new JPanel();
 	        	lugar.setLayout(new BorderLayout());
 	            checks [ i ] = new JCheckBox();
-	            JLabel boton = new JLabel( );
-	            boton.setIcon( new ImageIcon( new ImageIcon( RUTA + "candi.png" ).getImage( ).getScaledInstance( 133, 133, Image.SCALE_DEFAULT ) ) );
+	            JLabel foto = new JLabel( );
+	            foto.setIcon( new ImageIcon( new ImageIcon( RUTA + "candi.png" ).getImage( ).getScaledInstance( 133, 133, Image.SCALE_DEFAULT ) ) );
 	            checks[i].setActionCommand("elegir");
 	            checks[i].addActionListener(this);
-	            lugar.add( boton , BorderLayout.CENTER);
+	            grupo.add(checks[i]);
+	            lugar.add( foto , BorderLayout.CENTER);
 	            lugar.add(checks[i], BorderLayout.SOUTH);
 	            add(lugar);
+	            
 	        }
 
 	    }
+	    
+	    
+	    
+	    
 
-	    /**
+	    public JCheckBox[] getChecks() {
+			return checks;
+		}
+
+
+
+
+
+		public void setChecks(JCheckBox[] checks) {
+			this.checks = checks;
+		}
+
+
+
+
+
+		public ButtonGroup getGrupo() {
+			return grupo;
+		}
+
+
+
+
+
+		public void setGrupo(ButtonGroup grupo) {
+			this.grupo = grupo;
+		}
+
+
+
+
+
+		/**
 	     * Manejo de los eventos de los botones.
 	     * @param pEvento Evento de click sobre un botón. pEvento != null.
 	     */
@@ -83,18 +127,7 @@ public class PanelCandidatos extends JPanel implements ActionListener
 	        
 	        if( comando.equals( "elegir" ) )
 	        {
-	        	 for( int i = 0; i < checks.length; i++ )
-	 	        {
-	        		 if(checks [ i ].isSelected()){
-	        			 n++;
-	        		 }
-	 	        }
-	        	if(n>1){
-	        		 for( int i = 0; i < checks.length; i++ )
-	 	 	        {
-	        			 checks [ i ].setSelected(false);
-	 	 	        }
-	        	}
+	        	
 	        }
 	    }
 	}

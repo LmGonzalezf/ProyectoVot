@@ -11,18 +11,23 @@ public class VOVoto {
 	Long idCandidato;
 	@JsonProperty(value="idLista")
 	Long idLista;
-	@JsonProperty(value="idUsuario")
-	Long idUsuario;
+	@JsonProperty(value="usuario")
+	String usuario;
 	@JsonProperty(value="fecha")
 	Date fecha;
-	public VOVoto(@JsonProperty(value="id")Long id,@JsonProperty(value="idCandidato") Long idCandidato, @JsonProperty(value="idLista")Long idLista,@JsonProperty(value="idUsuario") Long idUsuario, @JsonProperty(value="fecha")Date fecha) {
+	@JsonProperty(value="estado")
+	String estado;
+	
+	public VOVoto(@JsonProperty(value="id")Long id, @JsonProperty(value="idCandidato")Long idCandidato, @JsonProperty(value="idLista")Long idLista, @JsonProperty(value="usuario")String usuario, @JsonProperty(value="fecha")Date fecha, @JsonProperty(value="estado")String estado) {
 		super();
 		this.id = id;
 		this.idCandidato = idCandidato;
 		this.idLista = idLista;
-		this.idUsuario = idUsuario;
+		this.usuario = usuario;
 		this.fecha = fecha;
+		this.estado = estado;
 	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -41,11 +46,11 @@ public class VOVoto {
 	public void setIdLista(Long idLista) {
 		this.idLista = idLista;
 	}
-	public Long getIdUsuario() {
-		return idUsuario;
+	public String getUsuario() {
+		return usuario;
 	}
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 	public Date getFecha() {
 		return fecha;
@@ -53,6 +58,14 @@ public class VOVoto {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	
 	
 	
 }

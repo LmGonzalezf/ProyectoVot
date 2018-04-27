@@ -20,6 +20,8 @@ public class VotacionesFrame  extends JFrame
 		principal= pprincipal;
     	setTitle( "i-vote" );
     	setSize( 565, 700 );
+        setLocation(750,200);
+        setResizable(false);
     	setDefaultCloseOperation( EXIT_ON_CLOSE );
     	setLayout( new BorderLayout( ) );
 
@@ -27,17 +29,38 @@ public class VotacionesFrame  extends JFrame
     	imagen.setIcon(new ImageIcon( new ImageIcon( "./data/banner.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ) );
     	add( imagen, BorderLayout.NORTH );
     	
-    	JPanel cental = new JPanel();
-    	cental.setLayout(new GridLayout(2,3));
+    	int tnumeroVotaciones = 1;
+    	int colum = 3;
+    	int fil = 2;
+    	while(tnumeroVotaciones>(colum*fil)) {
+    		fil++;
+    		if(tnumeroVotaciones>(colum*fil)) {
+    		colum++;
+    		}
+    	}
     	
-    	botones = new JButton[6];
+    	JPanel cental = new JPanel();
+    	cental.setLayout(new GridLayout(fil,colum));
+    	
+    	botones = new JButton[(colum*fil)];
         for( int i = 0; i < botones.length; i++ )
         {
             botones [ i ] = new JButton();
-            botones[ i ].setIcon( new ImageIcon( new ImageIcon( "./data/votaciones.png" ).getImage( ).getScaledInstance( 133, 133, Image.SCALE_DEFAULT ) ) );
             botones[i].setActionCommand("votaciones");
             botones[i].addActionListener( principal);
+            botones[i].setEnabled(false);
+            if(tnumeroVotaciones>i) {
+            	botones[ i ].setIcon( new ImageIcon( new ImageIcon( "./data/votaciones.png" ).getImage( ).getScaledInstance( 133, 133, Image.SCALE_DEFAULT ) ) );
+            	botones[i].setEnabled(true);
+            }
             cental.add(botones[i]);
+            
+            
+            
+            
+            
+            
+            
         }
         add(cental, BorderLayout.CENTER);
     	

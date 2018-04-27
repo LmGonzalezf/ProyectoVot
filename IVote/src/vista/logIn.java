@@ -21,13 +21,21 @@ public class logIn extends JFrame {
 	
 	private InterfazIvote principal;
 	
+	private JTextField usuario;
+	
+	private JPasswordField clave ;
+	
+	
 
 	public logIn ( InterfazIvote pprincipal){
 		
 		principal = pprincipal;
 		setTitle( "i-vote" );
         setSize( 565, 700 );
+        setLocation(750,200);
+        setResizable(false);
         setDefaultCloseOperation( EXIT_ON_CLOSE );
+        
         setLayout( new BorderLayout( ) );
         
         JLabel imagen = new JLabel( );
@@ -38,9 +46,9 @@ public class logIn extends JFrame {
         JPanel login = new JPanel();
         login.setLayout(new GridLayout(4,1));
         JLabel titulo = new JLabel("BIENVENIDO",SwingConstants.CENTER);
-        JTextField usuario = new JTextField();
+        usuario = new JTextField();
         usuario.setBorder( new TitledBorder( "Usuario"));
-        JPasswordField clave = new JPasswordField();
+        clave = new JPasswordField();
         clave.setBorder( new TitledBorder( "Password"));
         //login.add(new JLabel());
         login.add(titulo);
@@ -58,7 +66,33 @@ public class logIn extends JFrame {
         JLabel abajo = new JLabel();
         abajo.setIcon(new ImageIcon( new ImageIcon( "./data/personas.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ));
         add(abajo , BorderLayout.SOUTH);
-	   
+        
 	}
+
+
+
+	public JTextField getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(JTextField usuario) {
+		this.usuario = usuario;
+	}
+
+
+
+	public JPasswordField getClave() {
+		return clave;
+	}
+
+
+
+	public void setClave(JPasswordField clave) {
+		this.clave = clave;
+	}
+	
+	
 
 }

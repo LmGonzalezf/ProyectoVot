@@ -20,6 +20,8 @@ public class VotoFrame  extends JFrame{
 		
 		principal= pprincipal;
     	setTitle( "i-vote" );
+        setLocation(750,200);
+        setResizable(false);
     	setSize( 565, 700 );
     	setDefaultCloseOperation( EXIT_ON_CLOSE );
     	setLayout( new BorderLayout( ) );
@@ -34,8 +36,12 @@ public class VotoFrame  extends JFrame{
     	panelCandidatos = new PanelCandidatos( this);
     	panelCentro.add( panelCandidatos, BorderLayout.CENTER );
 
-    	panelVoto = new PanelVoto( this );
+    	panelVoto = new PanelVoto( this , principal );
     	add( panelVoto, BorderLayout.SOUTH );	
 	}
 
+	
+	public PanelCandidatos getPanleCnadidatos() {
+		return panelCandidatos;
+	}
 }

@@ -8,12 +8,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-=======
 	<classpathentry kind="lib" path="jackson-all-1.7.5.jar"/>
 	<classpathentry kind="lib" path="javax.servlet.jar"/>
 	<classpathentry kind="lib" path="javax.ws.rs.jar"/>
->>>>>>> 82017224f5db01fae81c6f25ec52b495a530d91e
+	<classpathentry kind="lib" path="C:/Users/ka.babativa/Desktop/Postgres/ProyectoVot/IVote/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

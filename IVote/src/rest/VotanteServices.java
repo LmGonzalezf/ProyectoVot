@@ -88,6 +88,13 @@ public class VotanteServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(retorno).build();
+		if(!retorno) {
+			return Response.status(203).entity(retorno).build();
+		}
+		else if (retorno) {
+			return Response.status(200).entity(retorno).build();
+		}
+		return null;
+		
 	}
 }

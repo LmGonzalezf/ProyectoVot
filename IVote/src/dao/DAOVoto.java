@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import vos.VOCandidato;
 import vos.VOConsultaVotos;
+import vos.VOVoto;
 
 public class DAOVoto {
 	/**
@@ -69,6 +71,32 @@ public class DAOVoto {
 			retorno.add(consulta);
 		}
 		return retorno;
-
+	}
+	
+	
+	public Long darUltimoId() throws SQLException, Exception {
+		String sql = "SELECT * sistema.votos";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		Long idFinal = 0L;
+		while (rs.next()) {
+			Long id = rs.getLong("ID");
+			idFinal = id;
+		}
+		return idFinal+1;
+	}
+	
+	public void votar(VOVoto voto) throws SQLException, Exception {
+		String sql = "INSERT INTO sistema.votos VALUES (?, ?, ?, ?, ?, ?);";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt.setLong(1, darUltimoId());
+		prepStmt.setLong(2, voto.getIdCandidato());
+		prepStmt.setLong(3, voto.getIdLista());
+		prepStmt.setDate(4, voto.getFecha());
+		prepStmt.setString(5, voto.getUsuario());
+		prepStmt.setString(6, voto.getEstado());
+		recursos.add(prepStmt);
+		prepStmt.executeUpdate();
 	}
 }

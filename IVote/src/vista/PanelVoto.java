@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 
 
 
-public class PanelVoto extends JPanel implements ActionListener
+public class PanelVoto extends JPanel
 	{
 	    // -----------------------------------------------------------------
 	    // Constantes
@@ -19,12 +19,12 @@ public class PanelVoto extends JPanel implements ActionListener
 	    /**
 	     * Constante para el método de extensión 1.
 	     */
-	    public final static String COMANDO_1 = "UNO";
+	    public final static String COMANDO_SALIR = "SALIR";
 
 	    /**
 	     * Constante para el método de extensión 2.
 	     */
-	    public final static String COMANDO_2 = "DOS";
+	    public final static String COMANDO_BACK = "BACK";
 
 	    // -----------------------------------------------------------------
 	    // Atributos
@@ -33,7 +33,9 @@ public class PanelVoto extends JPanel implements ActionListener
 	    /**
 	     * Ventana principal 
 	     */
-	    private VotoFrame principal;
+	    private InterfazIvote principal;
+	    
+	    private VotoFrame frameVoto;
 
 	    // -----------------------------------------------------------------
 	    // Atributos de Interfaz
@@ -48,6 +50,9 @@ public class PanelVoto extends JPanel implements ActionListener
 	     * Botón opción 2.
 	     */
 	    private JButton btnOpc2;
+	    
+	    private JButton btnOpc3;
+
 
 	    // -----------------------------------------------------------------
 	    // Constructores
@@ -57,21 +62,27 @@ public class PanelVoto extends JPanel implements ActionListener
 	     * Constructor del panel para los métodos de extensión.
 	     * @param pPrincipal Ventana principal de la aplicación.
 	     */
-	    public PanelVoto( VotoFrame pPrincipal )
+	    public PanelVoto( VotoFrame pvotoFrame , InterfazIvote pprincipal )
 	    {
-	        principal = pPrincipal;
-	        setLayout( new GridLayout( 1, 2 ) );
-	        setBorder( new TitledBorder( "Panel Voto" ) );
+	        frameVoto = pvotoFrame;
+	        principal= pprincipal;
+	        setLayout( new GridLayout( 1, 3 ) );
+	        setBorder( new TitledBorder( "Opciones" ) );
 
-	        btnOpc1 = new JButton( "Opción 1" );
-	        btnOpc1.setActionCommand( COMANDO_1 );
-	        btnOpc1.addActionListener( this );
+	        btnOpc1 = new JButton( "Salir" );
+	        btnOpc1.setActionCommand( COMANDO_SALIR );
+	        btnOpc1.addActionListener( principal );
 	        add( btnOpc1 );
 
-	        btnOpc2 = new JButton( "Opción 2" );
-	        btnOpc2.setActionCommand( COMANDO_2 );
-	        btnOpc2.addActionListener( this );
+	        btnOpc2 = new JButton( "Anterior" );
+	        btnOpc2.setActionCommand( COMANDO_BACK );
+	        btnOpc2.addActionListener( principal );
 	        add( btnOpc2 );
+	        
+	        btnOpc3 = new JButton( "Votar" );
+	        btnOpc3.setActionCommand( "Votar" );
+	        btnOpc3.addActionListener( principal );
+	        add( btnOpc3 );
 
 	    }
 
@@ -79,22 +90,4 @@ public class PanelVoto extends JPanel implements ActionListener
 	    // Métodos
 	    // -----------------------------------------------------------------
 
-	    /**
-	     * Manejo de los eventos de los botones.
-	     * @param pEvento Acción que generó el evento.
-	     */
-	    public void actionPerformed( ActionEvent pEvento )
-	    {
-	        String comando = pEvento.getActionCommand( );
-
-	        if( comando.equals( COMANDO_1 ) )
-	        {
-	           // principal.reqFuncOpcion1( );
-	        }
-	        else
-	        {
-	           //principal.reqFuncOpcion1( );
-	        }
-
-	    }
 	}
