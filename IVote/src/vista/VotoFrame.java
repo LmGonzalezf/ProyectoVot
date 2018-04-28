@@ -41,7 +41,7 @@ public class VotoFrame  extends JFrame{
 	}
 
 	
-	public PanelCandidatos getPanleCnadidatos() {
+	public PanelCandidatos getPanelCandidatos() {
 		return panelCandidatos;
 	}
 }

@@ -31,9 +31,29 @@ import vos.VOVotante;
 
 public class EleccionesFrame extends JFrame 
 {
+	
+	public VOEleccion[] eleccionesT;
+	public VOEleccion escogida;
 	private InterfazIvote principal;
 	JButton [] botones;
 	Gson jsonD = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	
+	public VOEleccion[] getEleccionesT() {
+		return eleccionesT;
+	}
+
+	public void setEleccionesT(VOEleccion[] eleccionesT) {
+		this.eleccionesT = eleccionesT;
+	}
+
+	public VOEleccion getEscogida() {
+		return escogida;
+	}
+
+	public void setEscogida(VOEleccion escogida) {
+		this.escogida = escogida;
+	}
+
 	public VOEleccion[] getElecciones() throws IOException {
     	URL url = new URL("http://localhost:8080/IVote/rest/elecciones");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -58,7 +78,7 @@ public class EleccionesFrame extends JFrame
 		System.out.println(eleccion.length);
 		
 		conn.disconnect();
-		
+		eleccionesT = eleccion;
 		return eleccion;
     }
 	
@@ -78,7 +98,7 @@ public class EleccionesFrame extends JFrame
     	imagen.setIcon(new ImageIcon( new ImageIcon( "./data/banner.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ) );
     	add( imagen, BorderLayout.NORTH );
     	
-    	int tnumeroEleciones = 1;
+    	int tnumeroEleciones = elecciones.length ;
     	int colum = 3;
     	int fil = 2;
     	while(tnumeroEleciones>(colum*fil)) {
@@ -89,7 +109,6 @@ public class EleccionesFrame extends JFrame
     	}
     	JPanel cental = new JPanel();
     	cental.setLayout(new GridLayout(fil,colum));
-    	
     	botones = new JButton[(colum*fil)];
         for( int i = 0; i < botones.length ; i++ )
         {
@@ -104,8 +123,8 @@ public class EleccionesFrame extends JFrame
             }
             cental.add(botones[i]);
         }
+        
         add(cental, BorderLayout.CENTER);
-        System.out.println("Width: "+botones[0].getSize());
     	
         JLabel abajo = new JLabel();
         abajo.setIcon(new ImageIcon( new ImageIcon( "./data/personas.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ));

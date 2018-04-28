@@ -29,7 +29,7 @@ public class VotacionesFrame  extends JFrame
     	imagen.setIcon(new ImageIcon( new ImageIcon( "./data/banner.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ) );
     	add( imagen, BorderLayout.NORTH );
     	
-    	int tnumeroVotaciones = 1;
+    	int tnumeroVotaciones = 8;
     	int colum = 3;
     	int fil = 2;
     	while(tnumeroVotaciones>(colum*fil)) {
@@ -54,13 +54,7 @@ public class VotacionesFrame  extends JFrame
             	botones[i].setEnabled(true);
             }
             cental.add(botones[i]);
-            
-            
-            
-            
-            
-            
-            
+
         }
         add(cental, BorderLayout.CENTER);
     	

@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import javax.xml.bind.JAXBContext;
 
 import sun.security.util.Password;
+import vos.VOEleccion;
 import vos.VOVotante;
 
 
@@ -207,6 +208,8 @@ public class InterfazIvote extends JFrame implements ActionListener
 
 	public void actionPerformed(ActionEvent pEvento) {
         String comando = pEvento.getActionCommand( );
+        String lcomando = comando.split("::")[0];
+        String id = comando.split("::")[1];
 
         if( comando.equals( "login" ) )
         {
@@ -228,7 +231,10 @@ public class InterfazIvote extends JFrame implements ActionListener
         }else if(comando.equals("elecciones")){
         	
         	try {
+        		VOEleccion[] eleccionest = elecciones.getEleccionesT();
+        		//VOEleccion escogida = eleccionesT[comando[posicion]];
 				siguientePanel("votaciones");
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -262,7 +268,7 @@ public class InterfazIvote extends JFrame implements ActionListener
 			}
         	
         }else if(comando.equals("Votar")) {
-        	JCheckBox chekes[] = voto.getPanleCnadidatos().getChecks();
+        	JCheckBox chekes[] = voto.getPanelCandidatos().getChecks();
         	int pos=0;
         	for (int i = 0; i < chekes.length; i++) {
 				if(chekes[i].isSelected()) {
