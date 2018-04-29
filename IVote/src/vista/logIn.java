@@ -56,7 +56,7 @@ public class logIn extends JFrame {
         login.add(clave);
         
         JButton botonlogin = new JButton();
-        botonlogin.setActionCommand("login");
+        botonlogin.setActionCommand("login::0");
         botonlogin.addActionListener(principal);
         
         botonlogin.setIcon(new ImageIcon( new ImageIcon( "./data/loginbutton.png" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ));

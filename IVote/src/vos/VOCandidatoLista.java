@@ -7,11 +7,11 @@ public class VOCandidatoLista {
 	@JsonProperty(value="idCandidato")
 	Long idCandidato;
 	@JsonProperty(value="numeroLista")
-	String numeroLista;
+	Long numeroLista;
 	@JsonProperty(value="idLista")
 	Long idLista;
 	
-	public VOCandidatoLista(@JsonProperty(value="idCandidato")Long idCandidato,@JsonProperty(value="numeroLista") String numeroLista,@JsonProperty(value="idLista") Long idLista) {
+	public VOCandidatoLista(@JsonProperty(value="idCandidato")Long idCandidato,@JsonProperty(value="numeroLista") Long numeroLista,@JsonProperty(value="idLista") Long idLista) {
 		super();
 		this.idCandidato = idCandidato;
 		this.numeroLista = numeroLista;
@@ -26,11 +26,11 @@ public class VOCandidatoLista {
 		this.idCandidato = idCandidato;
 	}
 
-	public String getNumeroLista() {
+	public Long getNumeroLista() {
 		return numeroLista;
 	}
 
-	public void setNumeroLista(String numeroLista) {
+	public void setNumeroLista(Long numeroLista) {
 		this.numeroLista = numeroLista;
 	}
 

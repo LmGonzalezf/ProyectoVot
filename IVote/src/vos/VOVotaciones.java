@@ -25,6 +25,9 @@ public class VOVotaciones {
 		this.idEleccion = idEleccion;
 		this.nombre = nombre;
 	}
+	public VOVotaciones() {
+		// TODO Auto-generated constructor stub
+	}
 	public Long getIdVotacion() {
 		return idVotacion;
 	}

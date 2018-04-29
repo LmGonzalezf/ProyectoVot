@@ -1,5 +1,6 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -10,6 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import tm.IVoteTM;
@@ -53,4 +58,26 @@ public class VotacionesServices {
 		}
 		return Response.status(200).entity(votaciones).build();
 	}
+	
+	@GET
+	@Path("{id}")
+	public Response getVotacionesPorId(@PathParam("id") Long id) {
+		IVoteTM tm = new IVoteTM(getPath());
+		ArrayList<VOVotaciones> votaciones;
+		VOVotaciones[] pasar;
+		int index = 0;
+		try {
+			index = 0;
+			votaciones = tm.votacionPorId(id);
+			pasar = new VOVotaciones[votaciones.size()];
+			for(VOVotaciones x:votaciones) {
+				pasar[index] = x;
+				index++;
+			}
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pasar).build();
+	}
+	
 }

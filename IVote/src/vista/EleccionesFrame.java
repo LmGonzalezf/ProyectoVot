@@ -35,7 +35,7 @@ public class EleccionesFrame extends JFrame
 	public VOEleccion[] eleccionesT;
 	public VOEleccion escogida;
 	private InterfazIvote principal;
-	JButton [] botones;
+	public JButton [] botones;
 	Gson jsonD = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 	
 	public VOEleccion[] getEleccionesT() {
@@ -113,7 +113,7 @@ public class EleccionesFrame extends JFrame
         for( int i = 0; i < botones.length ; i++ )
         {
             botones [ i ] = new JButton();
-            botones[i].setActionCommand("elecciones");
+            botones[i].setActionCommand("elecciones::"+i);
             botones[i].addActionListener( principal);
             botones[i].setEnabled(false);
             if(tnumeroEleciones>i) {
@@ -129,7 +129,6 @@ public class EleccionesFrame extends JFrame
         JLabel abajo = new JLabel();
         abajo.setIcon(new ImageIcon( new ImageIcon( "./data/personas.jpg" ).getImage( ).getScaledInstance( 565, 170, Image.SCALE_DEFAULT ) ));
         add(abajo , BorderLayout.SOUTH);
-		
 		
 		
 	}

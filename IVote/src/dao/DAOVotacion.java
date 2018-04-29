@@ -79,5 +79,29 @@ public class DAOVotacion {
 		return votaciones;
 	}
 	
+	public ArrayList<VOVotaciones> darVotacionesPorId(Long id) throws Exception
+	{
+		ArrayList<VOVotaciones> votaciones = new ArrayList<VOVotaciones>();
+		String sql = "SELECT * FROM sistema.votaciones WHERE \"ID_ELECCION\" = ?";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt.setLong(1, id);
+		System.out.println("HOLA SQL: "+sql+id);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while(rs.next()) {
+			Long id2 = rs.getLong(1);
+			Date fechaInicio = rs.getDate(2);
+			Date fechaFinal = rs.getDate(3);
+			Long idEleccion = rs.getLong(4);
+			String nombre = rs.getString(5);
+			System.out.println(nombre);
+			votaciones.add(new VOVotaciones(nombre,idEleccion,id2, fechaInicio, fechaFinal));
+		}
+		
+		return votaciones;
+	}
+	
 	
 }

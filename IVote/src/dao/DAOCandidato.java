@@ -73,5 +73,24 @@ public class DAOCandidato {
 		return candidatos;
 	}
 	
+	public ArrayList<VOCandidato> darCandidatosPorID(Long id2) throws SQLException, Exception {
+		ArrayList<VOCandidato> candidatos = new ArrayList<VOCandidato>();
+
+		String sql = "SELECT * FROM sistema.candidatos WHERE \"ID\" = ?";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt.setLong(1, id2);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			Long id = rs.getLong("ID");
+			String nombre = rs.getString("NOMBRE");
+			String genero = rs.getString("GENERO");
+			Date fechaNacimiento = rs.getDate("FECHA_NACIMIENTO");
+			candidatos.add(new VOCandidato(id, nombre, genero, fechaNacimiento));
+		}
+		return candidatos;
+	}
 	
 }

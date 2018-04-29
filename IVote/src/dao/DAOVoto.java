@@ -75,7 +75,7 @@ public class DAOVoto {
 	
 	
 	public Long darUltimoId() throws SQLException, Exception {
-		String sql = "SELECT * sistema.votos";
+		String sql = "SELECT * FROM sistema.votos";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();

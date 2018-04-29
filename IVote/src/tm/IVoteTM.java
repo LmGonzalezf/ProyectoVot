@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import dao.DAOCandidato;
+import dao.DAOCandidatoLista;
 import dao.DAOEleccion;
 import dao.DAOGanadores;
 import dao.DAOListaVotacion;
@@ -16,12 +18,14 @@ import dao.DAOVotacion;
 import dao.DAOVotante;
 import dao.DAOVoto;
 import vos.VOCandidato;
+import vos.VOCandidatoLista;
 import vos.VOConsultaVotos;
 import vos.VOEleccion;
 import vos.VOGanadores;
 import vos.VOListaVotacion;
 import vos.VOVotaciones;
 import vos.VOVotante;
+import vos.VOVoto;
 
 public class IVoteTM {
 	/**
@@ -109,19 +113,23 @@ public class IVoteTM {
 		try 
 		{
 			//////transaccion
-			this.conn = darConexion();
 			
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			daoCandidato.setConn(conn);
 			candidatos = daoCandidato.darCandidatos();
 			
-			
+			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} finally {
 			try {
@@ -131,6 +139,7 @@ public class IVoteTM {
 			} catch (SQLException exception) {
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
+				conn.rollback();
 				throw exception;
 			}
 		}
@@ -144,18 +153,21 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
-			
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			daovotante.setConn(conn);
 			votantes = daovotante.darVotantes();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} finally {
 			try {
@@ -165,6 +177,7 @@ public class IVoteTM {
 			} catch (SQLException exception) {
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
+				conn.rollback();
 				throw exception;
 			}
 		}
@@ -178,18 +191,21 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
-			
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			daoVoto.setConn(conn);
 			votos = daoVoto.darVotos();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} finally {
 			try {
@@ -199,6 +215,7 @@ public class IVoteTM {
 			} catch (SQLException exception) {
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
+				conn.rollback();
 				throw exception;
 			}
 		}
@@ -212,16 +229,19 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
-			
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			votante.setConn(conn);
 			retorno = votante.hacerComprobacion(credenciales);
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -231,6 +251,7 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -252,10 +273,12 @@ public class IVoteTM {
 			conn.commit();
 
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -265,6 +288,7 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -281,16 +305,20 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			
 			daoganadores.setConn(conn);
 			ganadores = daoganadores.consultarGanadores();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -300,6 +328,7 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -317,16 +346,20 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			
 			daovotacion.setConn(conn);
 			votaciones = daovotacion.darVotaciones();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -336,6 +369,7 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -352,16 +386,20 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			
 			daoeleccion.setConn(conn);
 			elecciones = daoeleccion.darElecciones();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -371,6 +409,7 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -387,16 +426,20 @@ public class IVoteTM {
 		{
 			//////transaccion
 			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 			
 			daolista.setConn(conn);
 			listas = daolista.darListasVotacion();
-			
+			conn.commit();
 			
 		} catch (SQLException e) {
+			conn.rollback();
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
 		} catch (Exception e) {
+			conn.rollback();
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -406,12 +449,207 @@ public class IVoteTM {
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
+				conn.rollback();
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
 			}
 		}
 		return listas;
+	}
+	
+	public ArrayList<VOVotaciones> votacionPorId(Long id) throws SQLException, Exception{
+		ArrayList<VOVotaciones> votacion;
+		DAOVotacion daoVotacion = new DAOVotacion();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daoVotacion.setConn(conn);
+			votacion = daoVotacion.darVotacionesPorId(id);
+			
+			conn.commit();
+			
+		} catch (SQLException e) {
+			conn.rollback();
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			conn.rollback();
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				conn.rollback();
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votacion;
+	}
+	
+	public ArrayList<VOListaVotacion> listasPorId(Long id) throws SQLException, Exception{
+		ArrayList<VOListaVotacion> votacion;
+		DAOListaVotacion daoVotacion = new DAOListaVotacion();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daoVotacion.setConn(conn);
+			votacion = daoVotacion.darListasVotacionPorIdVotacion(id);
+			conn.commit();
+			
+		} catch (SQLException e) {
+			conn.rollback();
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			conn.rollback();
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				
+				daoVotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				conn.rollback();
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votacion;
+	}
+	
+	public ArrayList<VOCandidatoLista> candidatosPorListaId(Long id) throws SQLException, Exception{
+		ArrayList<VOCandidatoLista> votacion;
+		DAOCandidatoLista daoVotacion = new DAOCandidatoLista();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daoVotacion.setConn(conn);
+			votacion = daoVotacion.darCandidatosListaPorId(id);
+			conn.commit();
+			
+		} catch (SQLException e) {
+			conn.rollback();
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			conn.rollback();
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				conn.rollback();
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votacion;
+	}
+	
+	public ArrayList<VOCandidato> candidatosId(Long id) throws SQLException, Exception{
+		ArrayList<VOCandidato> votacion;
+		DAOCandidato daoVotacion = new DAOCandidato();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daoVotacion.setConn(conn);
+			votacion = daoVotacion.darCandidatosPorID(id);
+			conn.commit();
+			
+		} catch (SQLException e) {
+			conn.rollback();
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			conn.rollback();
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				conn.rollback();
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return votacion;
+	}
+	
+	public void votar(VOVoto voto) throws SQLException, Exception{
+		DAOVoto daoVotacion = new DAOVoto();
+		try 
+		{
+			//////transaccion
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+			
+			daoVotacion.setConn(conn);
+			daoVotacion.votar(voto);
+			conn.commit();
+			
+		} catch (SQLException e) {
+			conn.rollback();
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			conn.rollback();
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVotacion.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 	}
 }
 

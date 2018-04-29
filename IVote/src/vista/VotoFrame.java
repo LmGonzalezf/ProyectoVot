@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,13 +11,25 @@ import javax.swing.JPanel;
 
 public class VotoFrame  extends JFrame{
 	
-	private PanelVoto panelVoto;
+	public PanelVoto panelVoto;
 	
-	private PanelCandidatos panelCandidatos;
+	public PanelCandidatos panelCandidatos;
 	
 	private InterfazIvote principal;
 	
-	public VotoFrame (InterfazIvote pprincipal){
+	
+	
+	public InterfazIvote getPrincipal() {
+		return principal;
+	}
+
+
+	public void setPrincipal(InterfazIvote principal) {
+		this.principal = principal;
+	}
+
+
+	public VotoFrame (InterfazIvote pprincipal) throws IOException{
 		
 		principal= pprincipal;
     	setTitle( "i-vote" );

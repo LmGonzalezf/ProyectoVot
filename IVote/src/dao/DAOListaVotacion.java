@@ -73,4 +73,23 @@ public class DAOListaVotacion {
 		}
 		return listas;
 	}
+	
+	public ArrayList<VOListaVotacion> darListasVotacionPorIdVotacion(Long id) throws Exception
+	{
+		ArrayList<VOListaVotacion> listas = new ArrayList<VOListaVotacion>();
+		String sql = "SELECT * FROM sistema.lista_votacion WHERE \"ID_VOTACION\" = ?";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt.setLong(1, id);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			Long id2 = rs.getLong(1);
+			Long idVotacion = rs.getLong(2);
+			String nombre = rs.getString(3);
+			listas.add(new VOListaVotacion(id2, nombre, idVotacion));
+		}
+		return listas;
+	}
 }
